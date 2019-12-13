@@ -1,13 +1,11 @@
-def add_mass(masses)
-    return [] if masses.empty?
+def get_fuel_for_mass(mass)
+    required_fuel = (mass / 3).floor - 2
 
-    required_fuel = (masses[-1] / 3).floor - 2
+    return 0 if required_fuel <= 0
 
-    return masses if required_fuel <= 0
-
-    return add_mass(masses + [required_fuel])
+    return required_fuel + get_fuel_for_mass(required_fuel)
 end
 
 File.open("input.txt") do |f|
-    print f.collect { |num| add_mass([num.to_i])[1..-1] }.flatten.reduce(:+).to_s + "\n"
+    puts f.collect { |num| get_fuel_for_mass(num.to_i) }.reduce(:+)
 end
