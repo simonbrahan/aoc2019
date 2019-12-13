@@ -7,8 +7,7 @@ end
 
 program = get_program
 
-program[1] = 12
-program[2] = 2
+program[1], program[2] = ARGV.map(&:to_i)
 
 cursor = 0
 
