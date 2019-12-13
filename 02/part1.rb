@@ -13,11 +13,13 @@ program[2] = 2
 cursor = 0
 
 while program[cursor] != 99
+    a, b, dest = program[cursor+1..cursor+3]
+
     case program[cursor]
     when 1
-        program[program[cursor+3]] = program[program[cursor+1]] + program[program[cursor+2]]
+        program[dest] = program[a] + program[b]
     when 2
-        program[program[cursor+3]] = program[program[cursor+1]] * program[program[cursor+2]]
+        program[dest] = program[a] * program[b]
     end
 
     cursor += 4
