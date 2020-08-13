@@ -9,6 +9,8 @@ data class Transform(val x: Int, val y: Int) {
 
 data class Point(val x: Int, val y: Int, val lengthFromOrigin: Int) {
     public fun transformed(trans: Transform) = Point(x + trans.x, y + trans.y, lengthFromOrigin + trans.length())
+
+    public fun asKey() = listOf(x, y)
 }
 
 class Instruction(val inst: String) {
@@ -52,8 +54,7 @@ var visitedPoints = HashMap<List<Int>, List<Point>>()
 
 linePlots.forEach {
     it.forEach {
-        val key = listOf(it.x, it.y)
-        visitedPoints.put(key, visitedPoints.getOrDefault(key, listOf<Point>()) + listOf(it))
+        visitedPoints.put(it.asKey(), visitedPoints.getOrDefault(it.asKey(), listOf<Point>()) + listOf(it))
     }
 }
 
