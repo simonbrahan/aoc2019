@@ -41,10 +41,20 @@ val linePlots = mutableListOf<List<Point>>()
 File("input.txt").forEachLine {
     val lineDef = it.trim().split(",").map { instr -> Instruction(instr) }
 
-    val plot = mutableListOf(Point(0, 0, 0))
+    val plot = mutableListOf<Point>()
+
+    var last = Point(0, 0, 0)
+
+    val visitedPoints = mutableSetOf(listOf(0, 0))
 
     lineDef.forEach {
-        plot += it.plotFromPoint(plot.last())
+        val newPoints = it.plotFromPoint(last)
+        last = newPoints.last()
+        val unvisitedPoints = newPoints.filterNot { visitedPoints.contains(it.asKey()) }
+
+        visitedPoints.addAll(unvisitedPoints.map { it.asKey() })
+
+        plot += unvisitedPoints
     }
 
     linePlots.add(plot)
